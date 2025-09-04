@@ -395,3 +395,19 @@ window.addEventListener("click", (event) => {
 		projectiles.push(projectile);
 	}
 });
+
+// Register PWA Service Worker (production only)
+if ("serviceWorker" in navigator) {
+	window.addEventListener("load", () => {
+		navigator.serviceWorker
+			.register("/sw.js")
+			.then(() => {
+				// eslint-disable-next-line no-console
+				console.log("Service worker registered");
+			})
+			.catch((err) => {
+				// eslint-disable-next-line no-console
+				console.warn("Service worker registration failed", err);
+			});
+	});
+}
