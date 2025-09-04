@@ -135,8 +135,24 @@ function animate() {
 
 animate();
 window.addEventListener("click", (event) => {
-	const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x);
-	const velocity = { x: Math.cos(angle) * 5, y: Math.sin(angle) * 5 };
-	const projectile = new Projectile(x, y, 10, "red", velocity);
-	projectiles.push(projectile);
+	const originX = player.x;
+	const originY = player.y;
+	const baseAngle = Math.atan2(
+		event.clientY - originY,
+		event.clientX - originX,
+	);
+
+	const count = 5; // number of projectiles in the spread
+	const spread = Math.PI / 12; // total half-angle of the spread (≈15°)
+
+	for (let i = 0; i < count; i++) {
+		const t = (i / (count - 1)) * 2 - 1; // [-1, 1]
+		const jitter = (Math.random() - 0.5) * (spread / 3);
+		const angle = baseAngle + t * spread + jitter;
+		const speed = 4 + Math.random() * 3; // random speed in [4, 7)
+		const velocity = { x: Math.cos(angle) * speed, y: Math.sin(angle) * speed };
+
+		const projectile = new Projectile(originX, originY, 10, "red", velocity);
+		projectiles.push(projectile);
+	}
 });
