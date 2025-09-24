@@ -347,7 +347,7 @@ function animate() {
 
 animate();
 spawnEnemies(200);
-window.addEventListener("click", (event) => {
+window.addEventListener("pointerdown", (event) => {
 	// detect click within replay button bounds even when overlay is drawn
 	const btnWidth = 200;
 	const btnHeight = 60;
